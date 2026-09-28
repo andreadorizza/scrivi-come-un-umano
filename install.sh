@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
-# install.sh - link (or copy) the humanizer skills into ~/.claude/skills/
+# install.sh - collega (o copia) le skill in ~/.claude/skills/
 #
-#   ./install.sh              symlink both skills (updates follow git pull)
-#   ./install.sh --copy       install independent copies instead
-#   ./install.sh --project    install into ./.claude/skills/ of the current dir
-#   ./install.sh --force      replace an existing install (backs it up first)
+#   ./install.sh                   umanizzatore + structural-humanizer (symlink)
+#   ./install.sh --with-humanizer  anche humanizer, se non l'hai già come plugin
+#   ./install.sh --copy            copie indipendenti invece dei symlink
+#   ./install.sh --project         installa in ./.claude/skills/ della cartella corrente
+#   ./install.sh --force           sostituisce un'installazione esistente (con backup)
 
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SKILLS=(humanizer structural-humanizer)
+SKILLS=(umanizzatore structural-humanizer)
 MODE=link
 TARGET="$HOME/.claude/skills"
 FORCE=0
@@ -19,7 +20,8 @@ while [[ $# -gt 0 ]]; do
     --copy)    MODE=copy ;;
     --project) TARGET="$PWD/.claude/skills" ;;
     --force)   FORCE=1 ;;
-    -h|--help) sed -n '2,9p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    --with-humanizer) SKILLS+=(humanizer) ;;
+    -h|--help) sed -n '2,8p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
     *) echo "unknown option: $1" >&2; exit 2 ;;
   esac
   shift
@@ -53,6 +55,7 @@ for skill in "${SKILLS[@]}"; do
 done
 
 chmod +x "$REPO/scripts/copy_scan.py" \
+         "$REPO/skills/umanizzatore/scripts/scan_it.py" \
          "$REPO/skills/structural-humanizer/scripts/structural_scan.py" 2>/dev/null || true
 
 cat <<EOF
@@ -61,6 +64,7 @@ done. verify with:
   ls -la $TARGET | grep -E 'humanizer'
 
 run the scanners:
-  python3 $REPO/scripts/copy_scan.py <file>
+  python3 $REPO/skills/umanizzatore/scripts/scan_it.py <file>      # italiano
+  python3 $REPO/scripts/copy_scan.py <file>                         # English
   python3 $REPO/skills/structural-humanizer/scripts/structural_scan.py <file>
 EOF

@@ -1,5 +1,31 @@
 # The pipeline
 
+## Per l'italiano
+
+```
+bozza
+  |
+  v
+[ 1: humanizer v3.1.0 ]            metodo e 26 schemi, con gli equivalenti italiani
+  |
+  v
+[ 1b: catalogo italiano ]          skills/umanizzatore/references/segnali.md
+  |                                scanner: skills/umanizzatore/scripts/scan_it.py
+  v
+[ 2: structural-humanizer ]        forma, invariato; il suo scanner è solo inglese
+  |
+  v
+[ voce ]                           campione dell'autore, preferenze della casa
+  |
+  v
+pubblica
+```
+
+La skill `umanizzatore` guida tutti e tre i passaggi. Il resto di questo file è la
+guida originale di humanizer-stack, per l'inglese.
+
+## English (upstream)
+
 Two passes, in order. They do different jobs and neither substitutes for the other.
 
 ```

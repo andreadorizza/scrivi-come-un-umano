@@ -1,0 +1,132 @@
+{
+  "fonti": {
+    "meier2026": {
+      "titolo": "Meier, F. (2026). Marking intersubjectivity in human-written and AI-generated editorials published in Il Foglio. AI-Linguistica 3(1).",
+      "url": "https://doi.org/10.62408/ai-ling.v3i1.65",
+      "tipo": "rivista peer-reviewed",
+      "consultata": "2026-09-28"
+    },
+    "sciandra2026": {
+      "titolo": "Sciandra, Dal Cero, Cortelazzo, Tuzzi (2026). AI detection in Italian essays through different text representations and adversarial robustness evaluation. Scientific Reports 16, 21499.",
+      "url": "https://www.nature.com/articles/s41598-026-51613-9",
+      "tipo": "rivista peer-reviewed",
+      "consultata": "2026-09-28"
+    },
+    "antonelli2025": {
+      "titolo": "Antonelli, G. (2025). Storia brevissima (ma molto intensa) dell'IA-taliano. Lingue e Culture dei Media 9(1): 4-50.",
+      "url": "https://doi.org/10.54103/2532-1803/29341",
+      "tipo": "rivista, saggio qualitativo",
+      "consultata": "2026-09-28"
+    },
+    "cicero2023": {
+      "titolo": "Cicero, F. (2023). L'italiano delle intelligenze artificiali generative. Italiano LinguaDue 15(2): 733-761.",
+      "url": "https://doi.org/10.54103/2037-3597/21990",
+      "tipo": "rivista peer-reviewed, qualitativo",
+      "consultata": "2026-09-28"
+    },
+    "crusca2026": {
+      "titolo": "Palermo, M. (2026). Sui testi generati dall'intelligenza artificiale. Verso un nuovo rapporto tra norma e uso? Accademia della Crusca, Tema.",
+      "url": "https://accademiadellacrusca.it/it/contenuti/sui-testi-generati-dallintelligenza-artificiale-verso-un-nuovo-rapporto-tra-norma-e-uso/46422",
+      "tipo": "istituzione",
+      "consultata": "2026-09-28"
+    },
+    "treccani-lineetta": {
+      "titolo": "Treccani, Magazine Lingua italiana: I punti della situazione, parte 9 (lineetta).",
+      "url": "https://www.treccani.it/magazine/lingua_italiana/articoli/scritto_e_parlato/punteggiatura9.html",
+      "tipo": "istituzione, norma tipografica",
+      "consultata": "2026-09-28"
+    }
+  },
+  "regole": [
+    {
+      "id": "non-x-ma-y",
+      "etichetta": "Negazione e controbattuta: \"non X, ma Y\", \"non solo X, ma (anche) Y\"",
+      "correzione": "Dì Y e basta. Tieni il contrasto solo se il lettore crede davvero X (humanizer §1).",
+      "pattern": ["\\bnon\\b[^.;:!?\\n]{1,60}?,\\s*ma\\b", "\\bnon solo\\b[^.;:!?\\n]{1,80}?\\bma\\b"],
+      "base": "fonte",
+      "fonti": ["meier2026", "antonelli2025"],
+      "forza": "da solo",
+      "dati": "Meier: 25 editoriali Il Foglio AI, 2025, modello non dichiarato; almeno una volta in ogni editoriale IA, quasi assente negli umani. Antonelli: ChatGPT, Copilot, Gemini, Claude, 2023-2025."
+    },
+    {
+      "id": "concessione-poi-ma",
+      "etichetta": "Concessione secca e poi \"Ma\": \"Sì. Ma...\", \"Vero. Ma...\", \"Certo. Ma...\"",
+      "correzione": "Se la concessione conta, dilla per intero; altrimenti taglia e parti dal punto.",
+      "pattern": ["\\b(?:sì|certo|vero)\\.\\s+ma\\b"],
+      "base": "fonte",
+      "fonti": ["meier2026"],
+      "forza": "debole da solo",
+      "dati": "Meier: negli editoriali IA la concessione apre spesso un \"ma\"; presentato come differenza dagli umani, senza conteggio; 2025."
+    },
+    {
+      "id": "eppure",
+      "etichetta": "\"Eppure\" come controbattuta",
+      "correzione": "Usa il connettivo che serve davvero, o nessuno. Varia i connettivi avversativi.",
+      "pattern": ["\\beppure\\b"],
+      "base": "fonte",
+      "fonti": ["meier2026"],
+      "forza": "debole da solo",
+      "dati": "Meier: 9 occorrenze nei testi IA, 0 negli umani, 2025. Campione piccolo."
+    },
+    {
+      "id": "dobbiamo",
+      "etichetta": "Obbligo rivolto al lettore: \"dobbiamo...\"",
+      "correzione": "Dì cosa succede o cosa pensi, non cosa \"dobbiamo\" fare.",
+      "pattern": ["\\bdobbiamo\\b"],
+      "base": "fonte",
+      "fonti": ["meier2026"],
+      "forza": "debole da solo",
+      "dati": "Meier: marcatori di obbligo circa 3 volte più frequenti nell'IA; \"dobbiamo\" rivolto al lettore 5 contro 0; 2025."
+    },
+    {
+      "id": "in-conclusione",
+      "etichetta": "Chiusura riassuntiva: \"In conclusione\", \"Quindi, in breve\"",
+      "correzione": "Finisci sull'ultimo fatto concreto. Niente riepilogo di ciò che il lettore ha appena letto.",
+      "pattern": ["\\bin conclusione\\b", "\\bquindi,\\s*in breve\\b"],
+      "base": "fonte",
+      "fonti": ["sciandra2026", "cicero2023"],
+      "forza": "debole da solo",
+      "dati": "Sciandra: 500 temi ChatGPT-3.5 contro 500 temi di studenti, 2024; \"conclusione\" è la parola funzionale che più spinge verso IA. Cicero: ChatGPT-3.5, Bing, Bard, 2023."
+    },
+    {
+      "id": "connettivo-in-testa",
+      "etichetta": "Connettivo di raccordo a inizio frase: Pertanto, Inoltre, Tuttavia, In ogni caso",
+      "correzione": "Togli il connettivo se il legame è ovvio; se non lo è, riscrivi la frase perché il legame si veda.",
+      "pattern": ["(?:^|[.!?]\\s+)(?:pertanto|inoltre|tuttavia|in ogni caso)\\b"],
+      "base": "fonte",
+      "fonti": ["antonelli2025", "crusca2026", "sciandra2026"],
+      "forza": "debole da solo",
+      "dati": "Antonelli: soprattutto ChatGPT-3.5, 2023. Crusca 2026: \"generoso ricorso a connettivi di raccordo\". Sciandra: esempio SHAP su un testo ChatGPT-3.5."
+    },
+    {
+      "id": "apertura-servile",
+      "etichetta": "Apertura che dà ragione: \"Hai (pienamente/perfettamente) ragione\", \"Non sbagli affatto\"",
+      "correzione": "Togli l'apertura e parti dal contenuto (humanizer §22).",
+      "pattern": ["^\\s*(?:hai (?:pienamente |perfettamente )?ragione|non sbagli affatto)\\b"],
+      "base": "fonte",
+      "fonti": ["antonelli2025"],
+      "forza": "da solo",
+      "dati": "Antonelli: ChatGPT-3.5 e 4.0, Copilot, Claude, Gemini, 2023-2025. Solo a inizio riga: in un dialogo la frase può essere umana."
+    },
+    {
+      "id": "cornice-chat",
+      "etichetta": "Cornice da chatbot: \"Sarò felice di aiutarti\", \"Spero che... ti aiutino\", \"non esitare a chiedere\"",
+      "correzione": "Togli la cornice, tieni il contenuto (humanizer §22).",
+      "pattern": ["\\bsarò felice di aiutarti\\b", "\\bspero che [^.\\n]{0,40}\\bti (?:aiuti|aiutino|sia utile|siano utili)\\b", "\\bnon esitare a chiedere\\b"],
+      "base": "fonte",
+      "fonti": ["cicero2023"],
+      "forza": "da solo",
+      "dati": "Cicero: ChatGPT-3.5, Bing Chat, Bard, 2023."
+    },
+    {
+      "id": "lineetta-lunga",
+      "etichetta": "Lineetta lunga (—): in italiano la lineetta è – , e quella singola è sentita come calco dall'inglese",
+      "correzione": "Per un inciso usa virgole, parentesi o due lineette – così –. Non è una prova di IA: è una norma tipografica.",
+      "pattern": ["—"],
+      "base": "fonte",
+      "fonti": ["treccani-lineetta"],
+      "forza": "debole da solo",
+      "dati": "Norma tipografica Treccani, non un'osservazione su testi IA. Nessuno studio misura le lineette nell'italiano generato."
+    }
+  ]
+}

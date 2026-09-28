@@ -1,157 +1,97 @@
-# humanizer-stack
+# umanizzatore
 
-A two-pass pipeline for removing the signs of AI writing from outward-facing text,
-packaged as [Claude Code Skills](https://code.claude.com/docs/en/skills).
+*Bozza.* Le skill per togliere i segni della scrittura IA dai testi **in italiano**,
+per [Claude Code](https://code.claude.com/docs/en/skills) e altri agenti che leggono
+`SKILL.md`.
 
-Most humanizers only fix words. That is the easy half, and it is the half that is
-decaying fastest. This repo pairs a surface pass with a structural pass, because the
-research says structure is where the durable fingerprint lives.
+È un fork di [humanizer-stack](https://github.com/NulightJens/humanizer-stack), con
+[humanizer](https://github.com/blader/humanizer) aggiornato alla v3.1.0 e un livello
+italiano nuovo.
 
-> **Free community.** I build tools like this in the open inside the
-> [Jens AI Community](https://www.skool.com/jens-ai-community-1306), a free Skool group
-> for putting AI to work in your business. If this repo is useful to you, come join us:
-> https://www.skool.com/jens-ai-community-1306
+## Perché un livello italiano
 
-## Why two passes
+Gli strumenti che esistono sono tarati sull'inglese. Gli schemi di `humanizer`
+descrivono scelte di default e valgono in ogni lingua, ma gli esempi, l'elenco di
+parole e gli scanner sono inglesi: su un copione italiano gli scanner di humanizer-stack
+trovano soltanto le lineette.
 
-The [StoryScope study](https://github.com/jenna-russell/storyscope) (Russell et al.,
-2026) classified 61,608 stories from humans and five LLMs using only discourse-level
-features, with every style feature withheld. It detected AI text at **93.2% F1**.
+E alcune regole inglesi in italiano sono sbagliate. La più nota: "ogni trattino è un
+segnale di IA". In italiano le lineette doppie per un inciso sono normali (Treccani).
 
-Then the authors ran AI text through LAMP, a professional span-level rewriting system
-that strips cliche, purple prose, and redundant exposition. Functionally, a very good
-surface humanizer.
+## La regola
 
-Detection dropped **1.6 points**.
+**Nel catalogo entra solo ciò che una fonte nomina in italiano, oppure una preferenza
+dichiarata come tale, con data e motivo.** Lo scanner non carica una regola senza base.
+Articoli SEO e liste di "parole che tradiscono ChatGPT" non contano come fonti.
 
-Meanwhile the surface layer is eroding on its own. GPT 5.4 already cut its em-dash
-usage sharply, and fine-tuning drops stylistic detection from 97% to 3%. Word-level
-tells are a moving target. Structural tells require structural rewrites.
+Le prove sono poche: due studi quantitativi (Meier 2026 su editoriali del *Foglio*,
+Sciandra et al. 2026 su temi universitari), alcuni lavori qualitativi di linguisti
+italiani, la Crusca e la Treccani. Nessuna classifica dei segnali italiani esiste. Il
+quadro completo, con quello che manca, è in
+[`skills/umanizzatore/references/evidenze.md`](skills/umanizzatore/references/evidenze.md).
 
-So: pass 1 fixes the words. Pass 2 fixes the shape. Run them in that order.
-
-## What is in here
+## Cosa c'è
 
 ```
 skills/
-  humanizer/                     Pass 1: words and phrasing
-    SKILL.md
-    references/copy-tells.md     Copy-specific tells (em dash, hype vocab, antithesis)
-  structural-humanizer/          Pass 2: discourse structure
-    SKILL.md
-    references/
-      storyscope-findings.md     The study distilled: 30 core features with rates
-      genre-calibration.md       Which audits apply per genre
-    scripts/structural_scan.py   Deterministic scanner for grep-able structural tells
-scripts/
-  copy_scan.py                   Deterministic scanner for mechanical copy tells
+  umanizzatore/                 il livello italiano (nuovo)
+    SKILL.md                    il metodo: humanizer → catalogo italiano → structural-humanizer
+    regole.json                 regole dello scanner, ognuna con fonte o preferenza
+    references/segnali.md       il catalogo: scansionabili, a occhio, vecchi, da tarare
+    references/evidenze.md      le fonti, cosa dicono, cosa è stato controllato
+    scripts/scan_it.py          scanner deterministico
+  humanizer/                    blader/humanizer v3.1.0, invariato (git subtree)
+  structural-humanizer/         da humanizer-stack, invariato
+scripts/copy_scan.py            scanner inglese di humanizer-stack, invariato
 docs/
-  PIPELINE.md                    How the passes chain, and what each one owns
+  PIPELINE.md                   come si concatenano i passaggi
+  copy-tells-en.md              i segnali inglesi dei testi promozionali, da humanizer-stack
 ```
 
-### Pass 1: `humanizer`
-
-Vocabulary, punctuation, and phrasing. Inflated symbolism, promotional language,
-superficial "-ing" analyses, vague attributions, em dash overuse, rule of three, AI
-vocabulary, negative parallelism. Built from Wikipedia's
-[Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing).
-
-The `copy-tells.md` reference adds the tells that show up specifically in public copy,
-ranked by a 3.2M-post Reddit analysis of what people actually flag.
-
-### Pass 2: `structural-humanizer`
-
-Six audits run one at a time, because aspect-based checking found 95% of issues in the
-study's own pipeline against 68% for a single combined pass:
-
-1. **Theme explicitness.** AI states its lesson. Narrator explains the theme 77% of the
-   time against 52% for humans.
-2. **Structural tidiness.** Single-track, everything resolved. Humans digress and leave
-   threads open.
-3. **Emotion mode.** The largest gap in the study. AI performs emotion through the body
-   81% of the time against 38% for humans. Humans just name the feeling.
-4. **Reference specificity.** Humans name real things (47% against 24%). AI stays at
-   vague allusion.
-5. **Reader engagement.** Humans acknowledge the reader. AI writes as though no one is
-   watching.
-6. **Shape convergence.** Does this piece have the same skeleton as your last three?
-
-## The trap
-
-Do not trade one default for another. The study's deepest finding is convergence: all
-five models occupy one tight region of structural space while humans are dispersed.
-Rarity is the human signal.
-
-If every piece now opens mid-scene, names three feelings, and ends unresolved, you have
-built a new detectable cluster. Pick one or two interventions per piece, vary them
-across pieces, and be able to say why this piece got this shape.
-
-## Install
+## Installazione
 
 ```bash
-git clone https://github.com/NulightJens/humanizer-stack.git
-cd humanizer-stack
-./install.sh
+git clone <questo repo> umanizzatore
+cd umanizzatore
+./install.sh                  # umanizzatore + structural-humanizer
+./install.sh --with-humanizer # anche humanizer, se non lo hai già come plugin
 ```
 
-This symlinks both skills into `~/.claude/skills/`, so updates land with a `git pull`.
-Pass `--copy` if you would rather have independent copies than symlinks.
-
-To install manually, copy `skills/humanizer` and `skills/structural-humanizer` into
-`~/.claude/skills/` (user-level) or `.claude/skills/` (project-level).
-
-## Use
-
-In Claude Code, the skills trigger on intent:
+## Uso
 
 ```
-humanize this post
-de-slop this lesson
-run the structural pass on draft.md
+umanizza questo post
+togli l'effetto IA da script.md
 ```
 
-Run the surface pass first, then the structural pass. `docs/PIPELINE.md` covers the
-order and what each layer owns.
-
-### Scanners
-
-Both scanners are deterministic and hook-friendly. They catch the pattern-matchable
-slice only, and neither replaces the judgment work in the skills.
+Scanner:
 
 ```bash
-python3 scripts/copy_scan.py draft.md
-python3 skills/structural-humanizer/scripts/structural_scan.py draft.md
-
-python3 scripts/copy_scan.py --json draft.md      # machine-readable
-python3 scripts/copy_scan.py --strict draft.md    # exit 1 on any hit
-cat draft.md | python3 scripts/copy_scan.py -     # stdin
+python3 skills/umanizzatore/scripts/scan_it.py bozza.md
+python3 skills/umanizzatore/scripts/scan_it.py --json bozza.md
+python3 skills/umanizzatore/scripts/scan_it.py --strict bozza.md   # exit 1 se trova qualcosa
+python3 skills/umanizzatore/scripts/scan_it.py --check             # valida regole.json
 ```
 
-Mark a line `copy-ignore` to suppress an intentional usage.
+`umanizza-ignora` su una riga la esclude.
 
-## Honest limits
+## Aggiornare dagli originali
 
-- **StoryScope studied roughly 5,000-word fiction.** Applying it to short nonfiction is
-  an inference, not a result the paper establishes. The subset that transfers most
-  cleanly is audits 1, 3, 4, and 6.
-- **Nothing here makes text undetectable, and that is not the goal.** The goal is
-  writing that reads as though a person with a specific point of view wrote it, because
-  a person did.
-- **The scanners catch maybe half.** Cadence, formulaic shape, and polished-but-empty
-  filler are only visible to a human reader.
-- **Audit 3 contradicts standard writing advice.** "Show, don't tell" is now a machine
-  signature. That is what the data says, and it is worth sitting with before applying.
+```bash
+git subtree pull --prefix=skills/humanizer blader main --squash   # humanizer
+git fetch stack && git merge stack/main                           # humanizer-stack
+```
 
-## Attribution
+## Limiti
 
-Built on work by [@blader](https://github.com/blader/humanizer) (MIT),
-[jcarterjohnson](https://github.com/jcarterjohnson/vibecoded-design-tells) (MIT), and
-Wikipedia's WikiProject AI Cleanup (CC BY-SA 4.0). Grounded in Russell et al. 2026.
+- Le regole vengono da modelli del 2023-2025 e da pochi generi (temi, editoriali,
+  risposte di chatbot). Nessuna fonte riguarda copioni video o post social brevi.
+- Lo scanner trova la parte meccanica. Ritmo, forma e contenuto vuoto li vede solo chi
+  legge.
+- Lo scopo non è ingannare i rilevatori. È un testo che suoni scritto da una persona
+  con un punto di vista, perché una persona l'ha scritto.
 
-Full breakdown with license obligations: [ATTRIBUTION.md](ATTRIBUTION.md).
+## Licenze
 
-## License
-
-MIT for this repository's own work. Portions carry upstream terms, including CC BY-SA
-4.0 material with share-alike obligations. See [ATTRIBUTION.md](ATTRIBUTION.md) before
-redistributing.
+MIT per il lavoro di questo repo. Parti con termini a monte, incluso materiale
+CC BY-SA 4.0. Vedi [ATTRIBUTION.md](ATTRIBUTION.md).

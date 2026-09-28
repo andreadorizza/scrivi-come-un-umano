@@ -8,11 +8,12 @@ obligations travel with it.
 
 | Component | Upstream | License | Obligation |
 |---|---|---|---|
-| `skills/humanizer/SKILL.md` | [blader/humanizer](https://github.com/blader/humanizer) | MIT | Keep copyright and license notice |
+| `skills/humanizer/**` | [blader/humanizer](https://github.com/blader/humanizer) v3.1.0, vendored unchanged via `git subtree` | MIT | Keep copyright and license notice |
 | ...its underlying pattern catalog | [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) | CC BY-SA 4.0 | Attribute and share alike |
-| `skills/humanizer/references/copy-tells.md` | [jcarterjohnson/vibecoded-design-tells](https://github.com/jcarterjohnson/vibecoded-design-tells) | MIT | Keep copyright and license notice |
+| `docs/copy-tells-en.md` | [jcarterjohnson/vibecoded-design-tells](https://github.com/jcarterjohnson/vibecoded-design-tells) | MIT | Keep copyright and license notice |
 | `scripts/copy_scan.py` | same as above (`devibe_scan.py`) | MIT | Keep copyright and license notice |
 | `skills/structural-humanizer/**` | original work, this repo | MIT | Cite the paper below if you build on it |
+| `skills/umanizzatore/**` | original work, this repo | MIT | Cite the sources listed in section 5 |
 | StoryScope findings | Russell et al. 2026, arXiv:2604.03136 | academic citation | Cite, do not relicense |
 
 ## 1. humanizer (MIT, plus CC BY-SA upstream)
@@ -37,7 +38,7 @@ get your own legal read first. The rest of this repository is unaffected.
 
 ## 2. Copy tells (MIT)
 
-`skills/humanizer/references/copy-tells.md` is condensed from section 11b of
+`docs/copy-tells-en.md` (moved from `skills/humanizer/references/copy-tells.md`) is condensed from section 11b of
 `references/tells.md` in the `unslop-ui` skill, installed from
 [jcarterjohnson/vibecoded-design-tells](https://github.com/jcarterjohnson/vibecoded-design-tells)
 (MIT).
@@ -77,3 +78,13 @@ Portions of `skills/humanizer/SKILL.md` derive from
 "Wikipedia:Signs of AI writing", available under the
 [Creative Commons Attribution-ShareAlike 4.0 License](https://creativecommons.org/licenses/by-sa/4.0/).
 Maintained by WikiProject AI Cleanup contributors.
+
+## 5. umanizzatore (original work)
+
+`skills/umanizzatore/**` is original work written for this repository. It cites, and
+does not reproduce, the Italian sources listed in `skills/umanizzatore/regole.json`
+(`fonti`) and `skills/umanizzatore/references/evidenze.md`: Meier 2026 (CC BY-NC-SA 4.0),
+Sciandra et al. 2026 (CC BY-NC-ND 4.0), Antonelli 2025 (CC BY-SA 4.0), Cicero 2023,
+Palermo 2026 (Accademia della Crusca), and Treccani. Findings are restated in our own
+words; quotations are limited to single short phrases and to the example constructions
+the sources name. Check each source's own terms before reusing more than that.
