@@ -1,6 +1,6 @@
-# umanizzatore
+# scrivi-come-un-umano
 
-*Bozza.* Le skill per togliere i segni della scrittura IA dai testi **in italiano**,
+*Bozza.* Le skill (la principale si chiama `umanizzatore`) per togliere i segni della scrittura IA dai testi **in italiano**,
 per [Claude Code](https://code.claude.com/docs/en/skills) e altri agenti che leggono
 `SKILL.md`.
 
@@ -51,8 +51,8 @@ docs/
 ## Installazione
 
 ```bash
-git clone <questo repo> umanizzatore
-cd umanizzatore
+git clone https://github.com/andreadorizza/scrivi-come-un-umano
+cd scrivi-come-un-umano
 ./install.sh                  # umanizzatore + structural-humanizer
 ./install.sh --with-humanizer # anche humanizer, se non lo hai già come plugin
 ```
