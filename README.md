@@ -1,6 +1,6 @@
 # scrivi-come-un-umano
 
-*Bozza.* Le skill (la principale si chiama `umanizzatore`) per togliere i segni della scrittura IA dai testi **in italiano**,
+Le skill (la principale si chiama `umanizzatore`) per togliere i segni della scrittura IA dai testi **in italiano**,
 per [Claude Code](https://code.claude.com/docs/en/skills) e altri agenti che leggono
 `SKILL.md`.
 
