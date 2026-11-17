@@ -5,7 +5,7 @@ per [Claude Code](https://code.claude.com/docs/en/skills) e altri agenti che leg
 `SKILL.md`.
 
 È un fork di [humanizer-stack](https://github.com/NulightJens/humanizer-stack), con
-[humanizer](https://github.com/blader/humanizer) aggiornato alla v3.1.0 e un livello
+[humanizer](https://github.com/blader/humanizer) aggiornato alla v4.0.0 e un livello
 italiano nuovo.
 
 ## Perché un livello italiano
@@ -40,7 +40,7 @@ skills/
     references/segnali.md       il catalogo: scansionabili, a occhio, vecchi, da tarare
     references/evidenze.md      le fonti, cosa dicono, cosa è stato controllato
     scripts/scan_it.py          scanner deterministico
-  humanizer/                    blader/humanizer v3.1.0, invariato (git subtree)
+  humanizer/                    blader/humanizer v4.0.0, invariato (git subtree)
   structural-humanizer/         da humanizer-stack, invariato
 scripts/copy_scan.py            scanner inglese di humanizer-stack, invariato
 docs/

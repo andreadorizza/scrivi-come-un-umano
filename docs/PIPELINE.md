@@ -6,7 +6,7 @@
 bozza
   |
   v
-[ 1: humanizer v3.1.0 ]            metodo e 26 schemi, con gli equivalenti italiani
+[ 1: humanizer v4.0.0 ]            metodo e 26 schemi, con gli equivalenti italiani
   |
   v
 [ 1b: catalogo italiano ]          skills/umanizzatore/references/segnali.md

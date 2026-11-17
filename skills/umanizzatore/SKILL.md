@@ -2,7 +2,7 @@
 name: umanizzatore
 description: |
   Riscrive testi in italiano che suonano scritti da un'IA perché suonino scritti da chi li firma,
-  senza cambiare cosa dicono. Applica il metodo di humanizer (v3.1.0) con il catalogo italiano
+  senza cambiare cosa dicono. Applica il metodo di humanizer (v4.0.0) con il catalogo italiano
   dei segnali, costruito solo su fonti citate (studi, Crusca, Treccani) e su preferenze
   dichiarate, poi il passaggio strutturale di structural-humanizer. Usala per copioni,
   post, caroselli, newsletter, articoli e ogni testo italiano da pubblicare, quando
@@ -38,12 +38,16 @@ regola "debole".
 
 ## 1. `humanizer`
 
-Usa la versione 3.1.0 che sta in questo repo: `../humanizer/SKILL.md`, relativo alla
+Usa la versione 4.0.0 che sta in questo repo: `../humanizer/SKILL.md`, relativo alla
 cartella reale di questa skill (se è un symlink, risolvilo). Una versione installata a
 parte può essere più vecchia.
 
-Segui la sua sezione *How to work* e le regole su voce e fatti: niente fatti, nomi,
-numeri o citazioni aggiunti; nessuna affermazione persa. Per l'italiano:
+Segui la sua sezione *How to work* e le regole sulla voce. Sui fatti questa skill è più
+stretta di `humanizer`: dalla 4.0.0 lui aggiunge un dettaglio specifico quando il testo è
+generico, qui no, perché il testo lo firma l'utente. Niente fatti, nomi, numeri, date o
+citazioni che non vengano dal testo o dall'utente, e nessuna affermazione persa. Se una
+frase ha bisogno di un dettaglio che manca, chiedilo o scrivi una frase più semplice. Al
+passo 3, un'aggiunta così è un errore come un'affermazione persa. Per l'italiano:
 
 - Gli esempi sono in inglese. Cerca la costruzione equivalente: "non X, ma Y" è il §1,
   il gerundio in coda è il §15, la cornice da chatbot è il §22.

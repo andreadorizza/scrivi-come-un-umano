@@ -8,7 +8,7 @@ obligations travel with it.
 
 | Component | Upstream | License | Obligation |
 |---|---|---|---|
-| `skills/humanizer/**` | [blader/humanizer](https://github.com/blader/humanizer) v3.1.0, vendored unchanged via `git subtree` | MIT | Keep copyright and license notice |
+| `skills/humanizer/**` | [blader/humanizer](https://github.com/blader/humanizer) v4.0.0, vendored unchanged via `git subtree` | MIT | Keep copyright and license notice |
 | ...its underlying pattern catalog | [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) | CC BY-SA 4.0 | Attribute and share alike |
 | `docs/copy-tells-en.md` | [jcarterjohnson/vibecoded-design-tells](https://github.com/jcarterjohnson/vibecoded-design-tells) | MIT | Keep copyright and license notice |
 | `scripts/copy_scan.py` | same as above (`devibe_scan.py`) | MIT | Keep copyright and license notice |

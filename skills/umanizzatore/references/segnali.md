@@ -1,6 +1,6 @@
 # Segnali in italiano
 
-Il catalogo italiano. Si aggiunge ai 26 schemi di `humanizer` (v3.1.0), non li
+Il catalogo italiano. Si aggiunge ai 26 schemi di `humanizer` (v4.0.0), non li
 sostituisce: quelli descrivono scelte di default che valgono in ogni lingua. Qui c'è
 solo ciò che una fonte nomina in italiano, oppure una preferenza della casa dichiarata
 come tale. Le fonti sono in [evidenze.md](evidenze.md).
